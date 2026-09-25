@@ -97,6 +97,33 @@ corresponds to on-chain positions that can be queried independently.
 | Pairs | ![](https://img.shields.io/endpoint?url=https%3A%2F%2Fyield.trdefi.com%2Fapi%2Fbadge%3Fmetric%3Dpairs) |
 | Networks | ![](https://img.shields.io/endpoint?url=https%3A%2F%2Fyield.trdefi.com%2Fapi%2Fbadge%3Fmetric%3Dchains) |
 
+## For integrators — the API
+
+The catalogue is readable by anyone. The only thing that can ever move funds is a client's own
+wallet.
+
+**Reading needs no credential at all.** Every figure on this page comes from an endpoint anyone can
+call:
+
+| Endpoint | Returns |
+|---|---|
+| `GET /api/stats` | Totals, per-network breakdown, deepest pairs by volume and by position count |
+| `GET /api/chains` | Live networks and the tokens a position can be built from |
+| `GET /api/strategies` | Open positions, filterable by network and pair |
+| `GET /api/strategy-detail?hash=` | One position, by its strategy hash |
+| `GET /api/quote?hash=&chain=&amount=` | A swap simulated on-chain against one position |
+| `GET /api/badge?metric=` | The live badges above, as a shields.io payload |
+
+**Writing is prepare-only.** Creating a position or a swap returns **unsigned transactions**; the
+integrator's own wallet signs them. There is no signing grant, no delegated key, and no endpoint that
+accepts a private key — so an API key here can never move funds, and a leaked one costs its owner a
+rate-limit problem rather than a balance.
+
+Keys are issued after a short review: **[request API access](https://yield.trdefi.com/docs/api#access)**.
+
+* Contract: [OpenAPI 3.1](https://yield.trdefi.com/openapi.json) · [API reference](https://yield.trdefi.com/docs/api) · [agent index](https://yield.trdefi.com/llms.txt)
+* One error envelope with stable codes, rate limits advertised on every reply, and breaking changes on a 90-day minimum notice.
+
 ## Deployed on Arc
 
 TRDEFI runs its first stablecoin market on **Arc**, Circle's USDC-native L1:
